@@ -7,14 +7,14 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.{Flow, Sink, Source}
+import akka.stream.scaladsl.{Sink, Source}
 import com.typesafe.config.ConfigFactory
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 import model.Transactions
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.StdIn
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 object WebServerWithHostLevelClientApi extends PlayJsonSupport {
   private implicit val system: ActorSystem =
@@ -22,8 +22,7 @@ object WebServerWithHostLevelClientApi extends PlayJsonSupport {
   private implicit val materializer: ActorMaterializer            = ActorMaterializer()
   private implicit val executionContext: ExecutionContextExecutor = system.dispatcher
   private val http                                                = Http()
-  private val connection: Flow[(HttpRequest, String), (Try[HttpResponse], String), Http.HostConnectionPool] =
-    http.cachedHostConnectionPool[String]("localhost", 8080)
+  private val connection                                          = http.cachedHostConnectionPool[String]("localhost", 8080)
 
   def main(args: Array[String]): Unit = {
     val route: Route =
@@ -52,9 +51,7 @@ object WebServerWithHostLevelClientApi extends PlayJsonSupport {
       .via(connection)
       .map {
         case (Success(v), accountId) => parseAsTransactionsResponse(v, accountId)
-        case (Failure(e), _) =>
-          println(e.getStackTrace)
-          Future.failed(e)
+        case (Failure(e), _)         => Future.failed(e)
       }
       .runWith(Sink.reduce[Future[Transactions]](_.zipWith(_)((t1, t2) => Transactions(t1.elements ++ t2.elements))))
       .flatten
