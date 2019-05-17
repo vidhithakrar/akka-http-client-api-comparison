@@ -13,10 +13,10 @@ import scala.io.StdIn
 import scala.util.Random
 
 object WebServer extends PlayJsonSupport {
-  implicit val system: ActorSystem = ActorSystem("financial-data-service")
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val system: ActorSystem                        = ActorSystem("financial-data-service")
+  implicit val materializer: ActorMaterializer            = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
-  val random = new Random(1234567890)
+  val random                                              = new Random(1234567890)
 
   def main(args: Array[String]): Unit = {
     val route: Route =
