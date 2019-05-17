@@ -3,8 +3,10 @@ import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
 
 object Transactions {
-  val httpProtocol = http
-    .baseUrl("http://localhost:9000")
+  private val requestLevelAPIPort = 9000
+  private val HostLevelAPIPort    = 9001
+
+  val httpProtocol = http.baseUrl(s"http://localhost:$requestLevelAPIPort")
 
   def scenarioWith(name: String, accountIds: Seq[Int]): ScenarioBuilder = {
     scenario(name)
