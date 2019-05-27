@@ -4,7 +4,6 @@ import model.Transactions
 import server.TransactionsDataHttpEntity.{parseTransactionsResponse, transactionsRequest}
 
 import scala.Function.tupled
-import scala.collection.immutable.Iterable
 import scala.concurrent.Future
 
 object WebServerWithRequestLevelClientApi extends WebServer {

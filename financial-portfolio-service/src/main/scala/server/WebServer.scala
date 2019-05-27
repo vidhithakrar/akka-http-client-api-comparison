@@ -8,7 +8,6 @@ import akka.stream.ActorMaterializer
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 import model.Transactions
 
-import scala.collection.immutable.Iterable
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.StdIn
 
@@ -23,7 +22,7 @@ trait WebServer extends PlayJsonSupport {
       path("transactions") {
         parameter('accountId.*) { accountIds =>
           get {
-            onSuccess(transactions(accountIds.to[Iterable])) { t =>
+            onSuccess(transactions(accountIds)) { t =>
               complete(t)
             }
           }
