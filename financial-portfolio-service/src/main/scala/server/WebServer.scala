@@ -1,4 +1,4 @@
-package service
+package server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
