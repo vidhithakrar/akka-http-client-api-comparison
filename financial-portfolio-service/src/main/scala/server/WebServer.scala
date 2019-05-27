@@ -1,13 +1,14 @@
 package server
 
 import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives.{complete, get, onSuccess, parameter, path, _}
 import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.{Http, HttpExt}
 import akka.stream.ActorMaterializer
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 import model.Transactions
 
+import scala.collection.immutable.Iterable
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.StdIn
 
@@ -15,14 +16,14 @@ trait WebServer extends PlayJsonSupport {
   implicit val system: ActorSystem                        = ActorSystem("financial-portfolio-service")
   implicit val materializer: ActorMaterializer            = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
-  val http                                                = Http()
+  val http: HttpExt                                       = Http()
 
   def main(args: Array[String]): Unit = {
     val route: Route =
       path("transactions") {
         parameter('accountId.*) { accountIds =>
           get {
-            onSuccess(transactions(accountIds.toSeq)) { t =>
+            onSuccess(transactions(accountIds.to[Iterable])) { t =>
               complete(t)
             }
           }
@@ -38,7 +39,7 @@ trait WebServer extends PlayJsonSupport {
       .onComplete(_ => system.terminate())
   }
 
-  def transactions(accountIds: Seq[String]): Future[Transactions]
+  def transactions(accountIds: Iterable[String]): Future[Transactions]
 
   def port: Int
 }

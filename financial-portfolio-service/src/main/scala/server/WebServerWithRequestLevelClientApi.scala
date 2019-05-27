@@ -4,11 +4,12 @@ import model.Transactions
 import server.TransactionsDataHttpEntity.{parseTransactionsResponse, transactionsRequest}
 
 import scala.Function.tupled
+import scala.collection.immutable.Iterable
 import scala.concurrent.Future
 
 object WebServerWithRequestLevelClientApi extends WebServer {
 
-  override def transactions(accountIds: Seq[String]): Future[Transactions] = {
+  override def transactions(accountIds: Iterable[String]): Future[Transactions] = {
     accountIds
       .map(accountId => (http.singleRequest(transactionsRequest(accountId)), accountId))
       .map(tupled((response, accountId) => response.flatMap(parseTransactionsResponse(_, accountId))))

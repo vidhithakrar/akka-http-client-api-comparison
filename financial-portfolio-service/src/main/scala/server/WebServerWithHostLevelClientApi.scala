@@ -4,6 +4,7 @@ import akka.stream.scaladsl.{Sink, Source}
 import model.Transactions
 import server.TransactionsDataHttpEntity._
 
+import scala.collection.immutable.Iterable
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
@@ -11,8 +12,8 @@ object WebServerWithHostLevelClientApi extends WebServer {
 
   private val connection = http.cachedHostConnectionPool[String](transactionsHost, transactionsPort)
 
-  override def transactions(accountIds: Seq[String]): Future[Transactions] = {
-    Source(accountIds.to[collection.immutable.Seq])
+  override def transactions(accountIds: Iterable[String]): Future[Transactions] = {
+    Source(accountIds)
       .map(accountId => (transactionsRequest(accountId), accountId))
       .via(connection)
       .map {
