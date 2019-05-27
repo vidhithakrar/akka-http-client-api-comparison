@@ -1,4 +1,4 @@
-import Transactions.{httpProtocol, scenarioWith}
+import Transactions._
 import io.gatling.core.Predef._
 
 class SingleUserWithSingleAccountSimulation extends Simulation {

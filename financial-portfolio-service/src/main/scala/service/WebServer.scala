@@ -43,5 +43,4 @@ trait WebServer extends PlayJsonSupport {
   def systemName: String
 
   def port: Int
-
 }
