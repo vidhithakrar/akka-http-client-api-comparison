@@ -12,16 +12,17 @@ import scala.concurrent.Future
 
 object TransactionsDataHttpEntity extends PlayJsonSupport {
 
-  def host: String = "localhost"
+  def transactionsHost: String = "localhost"
 
-  def port: Int = 8080
+  def transactionsPort: Int = 8080
 
-  def request(accountId: String): HttpRequest = {
+  def transactionsRequest(accountId: String): HttpRequest = {
     println(s"[${LocalDateTime.now}] Requesting transactions for accountId: $accountId")
-    HttpRequest(uri = s"http://$host:$port/$accountId/transactions")
+    HttpRequest(uri = s"http://$transactionsHost:$transactionsPort/$accountId/transactions")
   }
 
-  def parseResponse(httpResponse: HttpResponse, accountId: String)(implicit materialize: Materializer): Future[Transactions] = {
+  def parseTransactionsResponse(httpResponse: HttpResponse,
+                                accountId: String)(implicit materialize: Materializer): Future[Transactions] = {
     println(s"[${LocalDateTime.now}] Transactions received for accountId: $accountId")
     Unmarshal(httpResponse.entity).to[Transactions]
   }
