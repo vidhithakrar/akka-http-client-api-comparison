@@ -17,7 +17,7 @@ object WebServerWithHostLevelClientApi extends WebServer {
       .map(accountId => (transactionsRequest(accountId), accountId))
       .via(connection)
       .map {
-        case (Success(v), accountId) => parseTransactionsResponse(v, accountId)
+        case (Success(v), accountId) => parseAsTransactionsResponse(v, accountId)
         case (Failure(e), _)         => Future.failed(e)
       }
       .runWith(Sink.reduce[Future[Transactions]](_.zipWith(_)((t1, t2) => Transactions(t1.elements ++ t2.elements))))

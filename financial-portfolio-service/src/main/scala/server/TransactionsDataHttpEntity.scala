@@ -21,8 +21,8 @@ object TransactionsDataHttpEntity extends PlayJsonSupport {
     HttpRequest(uri = s"http://$transactionsHost:$transactionsPort/$accountId/transactions")
   }
 
-  def parseTransactionsResponse(httpResponse: HttpResponse,
-                                accountId: String)(implicit materialize: Materializer): Future[Transactions] = {
+  def parseAsTransactionsResponse(httpResponse: HttpResponse,
+                                  accountId: String)(implicit materialize: Materializer): Future[Transactions] = {
     println(s"[${LocalDateTime.now}] Transactions received for accountId: $accountId")
     Unmarshal(httpResponse.entity).to[Transactions]
   }
