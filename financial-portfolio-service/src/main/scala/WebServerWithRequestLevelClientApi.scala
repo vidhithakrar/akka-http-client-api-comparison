@@ -13,8 +13,6 @@ object WebServerWithRequestLevelClientApi extends WebServer {
       .reduce(_.zipWith(_)((t1, t2) => Transactions(t1.elements ++ t2.elements)))
   }
 
-  override def systemName: String = "financial-portfolio-service-with-request-level-client-api"
-
   override def port: Int = 9000
 
 }

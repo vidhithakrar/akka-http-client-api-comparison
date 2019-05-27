@@ -21,8 +21,6 @@ object WebServerWithHostLevelClientApi extends WebServer {
       .flatten
   }
 
-  override def systemName = "financial-portfolio-service-with-host-level-client-api"
-
   override def port: Int = 9001
 
 }

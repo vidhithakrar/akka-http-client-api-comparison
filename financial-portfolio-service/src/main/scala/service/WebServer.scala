@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.StdIn
 
 trait WebServer extends PlayJsonSupport {
-  implicit val system: ActorSystem                        = ActorSystem(systemName)
+  implicit val system: ActorSystem                        = ActorSystem("financial-portfolio-service")
   implicit val materializer: ActorMaterializer            = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
   val http                                                = Http()
@@ -39,8 +39,6 @@ trait WebServer extends PlayJsonSupport {
   }
 
   def transactions(accountIds: Seq[String]): Future[Transactions]
-
-  def systemName: String
 
   def port: Int
 }
