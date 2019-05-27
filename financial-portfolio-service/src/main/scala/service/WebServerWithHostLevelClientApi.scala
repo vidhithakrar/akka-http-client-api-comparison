@@ -1,6 +1,7 @@
+package service
+
 import akka.stream.scaladsl.{Sink, Source}
 import model.Transactions
-import service.{TransactionsDataHttpEntity, WebServer}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}

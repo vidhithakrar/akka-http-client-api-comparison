@@ -1,5 +1,6 @@
+package service
+
 import model.Transactions
-import service.{TransactionsDataHttpEntity, WebServer}
 
 import scala.Function.tupled
 import scala.concurrent.Future
