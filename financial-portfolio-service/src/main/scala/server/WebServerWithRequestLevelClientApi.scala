@@ -16,5 +16,4 @@ object WebServerWithRequestLevelClientApi extends WebServer {
   }
 
   override def port: Int = 9000
-
 }

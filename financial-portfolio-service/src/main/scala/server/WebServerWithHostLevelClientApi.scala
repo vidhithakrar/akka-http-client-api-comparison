@@ -25,5 +25,4 @@ object WebServerWithHostLevelClientApi extends WebServer {
   }
 
   override def port: Int = 9001
-
 }
