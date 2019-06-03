@@ -9,4 +9,6 @@ Comparison of Request-level and Host-level Akka Http Client API with a specific 
   Run `WebServerWithHostLevelClientApi.scala`
 ## Run API tests
   There are [gatling](https://gatling.io/) tests inside `financial-portfolio-service/src/it/scala`. A single test can be run with the command: `gatling-it:testOnly <simulation-class-name>`, For eg: `gatling-it:testOnly SingleUserWithTenAccountsSimulation`
+  
+  Note: Update the port in Transactions.scala to run the test against Host-level API implementation
 
