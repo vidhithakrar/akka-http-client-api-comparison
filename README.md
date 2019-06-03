@@ -1,5 +1,5 @@
 # akka-http-client-api-comparison
-Comparison of Request-level and Host-level Akka Http Client API with a specific example.
+Comparison of Request-level and Host-level Akka Http Client API with a specific example mentioned at https://medium.com/@vidhi.thakrar/akka-http-client-api-request-level-vs-host-level-8bcf5da799e1.
 
 ## Start `financial-data-service`
   Run `WebServer.scala`
